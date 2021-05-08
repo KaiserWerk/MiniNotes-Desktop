@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+        Width="500" Height="300"
+        x:Class="GUI.View.SettingsWindow"
+        Title="Settings"
+        DataContext="{Binding Source={StaticResource Locator}, Path=SettingsWindowViewModelInstance}">
+	<Grid RowDefinitions="Auto, *" Margin="10">
+        <CheckBox Grid.Row="0" FontSize="12" IsChecked="{Binding Path=Settings.SynchronizationEnabled}">Enable Synchronization</CheckBox>
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="1*, 4*">
+            <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="12">Address</TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="1" FontSize="12" Text="{Binding Path=Settings.RemoteAddress}"></TextBox>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="12">Id</TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" FontSize="12" Text="{Binding Path=Settings.Identifier}"></TextBox>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="12">Secret</TextBlock>
+            <TextBox Grid.Row="2" Grid.Column="1" FontSize="12" Text="{Binding Path=Settings.Secret}"></TextBox>
+
+            <CheckBox Grid.Row="3" Grid.Column="1" Margin="0,20,0,0" FontSize="12" IsChecked="{Binding Path=Settings.EncryptionEnabled}">Enable Encryption</CheckBox>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="12">Key</TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="1" FontSize="12" Text="{Binding Path=Settings.EncryptionKey}"></TextBox>
+            
+            <Button Grid.Row="5" Grid.Column="1" FontSize="12" Command="{Binding Path=SaveSettingsCommand}">Save Settings</Button>
+        </Grid>
+    </Grid>
+</Window>

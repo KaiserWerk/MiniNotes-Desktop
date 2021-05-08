@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        Width="500" Height="300"
+        x:Class="GUI.View.MainWindow"
+        Title="MiniNotes Desktop"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModelInstance}">
+	<Grid RowDefinitions="Auto, *" ColumnDefinitions="3*, 2*">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Button Content="Save" HorizontalAlignment="Left" FontSize="12" Command="{Binding Path=SaveChangesCommand}" />
+            <Button Content="Reload data" HorizontalAlignment="Left" FontSize="12" Margin="4,0,0,0" />
+            <Button Content="Change Settings" HorizontalAlignment="Left" FontSize="12" Margin="4,0,0,0" Command="{Binding Path=ChangeSettingsCommand}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Right" Margin="0,4,4,0" Text="{Binding Path=UserMessage}" />
+
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="2"
+                 TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+                 Text="{Binding Path=TextContent}" />
+    </Grid>
+</Window>
