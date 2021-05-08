@@ -10,24 +10,17 @@ namespace Core
     {
         private HttpClient client;
 
-        private string remoteUrl;
         private string identifier;
         private string secret;
 
         public RestService()
         {
-            var handler = new HttpClientHandler()
-            {
-                UseProxy = true,
-                Proxy = new WebProxy("http://127.0.0.1:8888"),
-            };
-            this.client = new HttpClient(handler);
-            
+            this.client = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
         }
 
         public RestService SetRemote(string address)
         {
-            this.remoteUrl = address;
+            this.client.BaseAddress = new Uri(address.TrimEnd('/') + "/");
             return this;
         }
 
@@ -37,15 +30,15 @@ namespace Core
             return this;
         }
 
-        public RestService SetSecret(string secret)
+        public RestService SetSecret(string s)
         {
-            this.secret = secret;
+            this.secret = s;
             return this;
         }
 
         public void StoreContent(string content)
         {
-            var msg = new HttpRequestMessage(HttpMethod.Post, this.remoteUrl)
+            var msg = new HttpRequestMessage(HttpMethod.Post, "store")
             {
                 Content = new StringContent(content),
             };
@@ -59,7 +52,15 @@ namespace Core
 
         public string GetContent()
         {
-            return ""; // TODO
+            var msg = new HttpRequestMessage(HttpMethod.Get, "get");
+
+            byte[] authBytes = Encoding.ASCII.GetBytes($"{this.identifier}:{this.secret}");
+            string authHeader = Convert.ToBase64String(authBytes);
+            msg.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
+
+            var resp = this.client.Send(msg);
+
+            return resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
         }
     }
 }
