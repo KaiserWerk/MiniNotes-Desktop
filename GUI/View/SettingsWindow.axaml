@@ -6,6 +6,7 @@
         Width="500" Height="300"
         x:Class="GUI.View.SettingsWindow"
         Title="Settings"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource Locator}, Path=SettingsWindowViewModelInstance}">
 	<Grid RowDefinitions="Auto, *" Margin="10">
         <CheckBox Grid.Row="0" FontSize="12" IsChecked="{Binding Path=Settings.SynchronizationEnabled}">Enable Synchronization</CheckBox>

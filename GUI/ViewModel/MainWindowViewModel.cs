@@ -47,7 +47,7 @@ namespace GUI.ViewModel
 
                     this.TextContent = this.restService.GetContent();
                 }
-                catch (Exception e)
+                catch
                 {
                     this.UserMessage = "Could not fetch remote data!";
                     Task.Run(() =>
@@ -68,14 +68,11 @@ namespace GUI.ViewModel
         private void ChangedSettingsHandler(object obj)
         {
             this.settings = this.settingsService.ReadSettings();
-            // duplicate code
-            if (this.settings.SynchronizationEnabled)
-            {
-                this.restService
-                    .SetRemote(this.settings.RemoteAddress)
-                    .SetId(this.settings.Identifier)
-                    .SetSecret(this.settings.Secret);
-            }
+            this.restService
+                .SetRemote(this.settings.RemoteAddress)
+                .SetId(this.settings.Identifier)
+                .SetSecret(this.settings.Secret);
+            
             // TODO handle encryption
         }
 

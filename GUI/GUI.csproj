@@ -3,6 +3,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>pencil.ico</ApplicationIcon>
+    <Description>Icon made by www.freepik.com from www.flaticon.com</Description>
+    <PackageId>GUI</PackageId>
+    <Authors>Robin Kaiser</Authors>
+    <Company>KaiserWerk</Company>
+    <Product>MiniNotes Desktop</Product>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="C:\Users\Robin\.nuget\packages\kaisermvvmcore\1.2.3\contentFiles\any\netcoreapp3.1\Resources\scheme.png" />

@@ -6,6 +6,7 @@
         Width="500" Height="300"
         x:Class="GUI.View.MainWindow"
         Title="MiniNotes Desktop"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModelInstance}">
 	<Grid RowDefinitions="Auto, *" ColumnDefinitions="3*, 2*">
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">

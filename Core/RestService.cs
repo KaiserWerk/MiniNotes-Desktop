@@ -47,7 +47,14 @@ namespace Core
             string authHeader = Convert.ToBase64String(authBytes);
             msg.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
 
-            this.client.Send(msg);
+            try
+            {
+                this.client.Send(msg);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public string GetContent()
@@ -60,7 +67,14 @@ namespace Core
 
             var resp = this.client.Send(msg);
 
-            return resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            try
+            {
+                return resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
