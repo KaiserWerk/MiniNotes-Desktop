@@ -11,7 +11,7 @@
 	<Grid RowDefinitions="Auto, *" ColumnDefinitions="3*, 2*">
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Button Content="Save" HorizontalAlignment="Left" FontSize="12" Command="{Binding Path=SaveChangesCommand}" />
-            <Button Content="Reload data" HorizontalAlignment="Left" FontSize="12" Margin="4,0,0,0" />
+            <Button Content="Reload data" HorizontalAlignment="Left" FontSize="12" Margin="4,0,0,0" Command="{Binding Path=ReloadDataCommand}" />
             <Button Content="Change Settings" HorizontalAlignment="Left" FontSize="12" Margin="4,0,0,0" Command="{Binding Path=ChangeSettingsCommand}" />
         </StackPanel>
 

@@ -10,6 +10,7 @@ namespace Core
     {
         private HttpClient client;
 
+        private string baseAddress;
         private string identifier;
         private string secret;
 
@@ -20,7 +21,8 @@ namespace Core
 
         public RestService SetRemote(string address)
         {
-            this.client.BaseAddress = new Uri(address.TrimEnd('/') + "/");
+            //this.client.BaseAddress = new Uri(address.TrimEnd('/') + "/");
+            this.baseAddress = address;
             return this;
         }
 
@@ -38,7 +40,7 @@ namespace Core
 
         public void StoreContent(string content)
         {
-            var msg = new HttpRequestMessage(HttpMethod.Post, "store")
+            var msg = new HttpRequestMessage(HttpMethod.Post, $"{this.baseAddress}/store")
             {
                 Content = new StringContent(content),
             };
@@ -59,7 +61,7 @@ namespace Core
 
         public string GetContent()
         {
-            var msg = new HttpRequestMessage(HttpMethod.Get, "get");
+            var msg = new HttpRequestMessage(HttpMethod.Get, $"{this.baseAddress}/get");
 
             byte[] authBytes = Encoding.ASCII.GetBytes($"{this.identifier}:{this.secret}");
             string authHeader = Convert.ToBase64String(authBytes);

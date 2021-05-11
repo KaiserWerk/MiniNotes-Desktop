@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Core;
 using Core.Model;
 using GUI.Message;
-using GUI.View;
 using KaiserMVVMCore;
+using System.Threading.Tasks;
 using WindowManager = GUI.Helper.WindowManager;
 
 namespace GUI.ViewModel
@@ -18,15 +17,29 @@ namespace GUI.ViewModel
 
         private UserSettings settings;
 
-        public string UserMessage { get; set; } = string.Empty;
-        public string TextContent { get; set; } = string.Empty;
+
+        private string userMessage = string.Empty;
+        public string UserMessage
+        {
+            get => this.userMessage;
+            set => base.Set(ref this.userMessage, value);
+        }
+
+        private string textContent = string.Empty;
+        public string TextContent
+        {
+            get => this.textContent;
+            set => base.Set(ref this.textContent, value);
+        }
 
         public RelayCommand SaveChangesCommand { get; set; }
+        public RelayCommand ReloadDataCommand { get; set; }
         public RelayCommand ChangeSettingsCommand { get; set; }
 
         public MainWindowViewModel(RestService rs, SettingsService ss, LocalContentService lcs)
         {
             this.SaveChangesCommand = new RelayCommand(this.SaveChangesCommandExecute);
+            this.ReloadDataCommand = new RelayCommand(this.ReloadDataCommandExecute);
             this.ChangeSettingsCommand = new RelayCommand(this.ChangeSettingsCommandExecute);
 
             Messenger.Register<SettingsHaveChangedMessage>(this.ChangedSettingsHandler);
@@ -36,6 +49,16 @@ namespace GUI.ViewModel
             this.localContentService = lcs;
 
             this.settings = this.settingsService.ReadSettings();
+            this.LoadData();
+        }
+
+        private void ReloadDataCommandExecute()
+        {
+            this.LoadData();
+        }
+
+        private void LoadData()
+        {
             if (this.settings.SynchronizationEnabled)
             {
                 try
@@ -47,7 +70,7 @@ namespace GUI.ViewModel
 
                     this.TextContent = this.restService.GetContent();
                 }
-                catch
+                catch (Exception e)
                 {
                     this.UserMessage = "Could not fetch remote data!";
                     Task.Run(() =>
@@ -56,13 +79,13 @@ namespace GUI.ViewModel
                         this.UserMessage = string.Empty;
                     });
                     this.TextContent = this.localContentService.GetContent();
+                    Trace.WriteLine("load data: " + e.Message);
                 }
             }
             else
             {
                 this.TextContent = this.localContentService.GetContent();
             }
-            
         }
 
         private void ChangedSettingsHandler(object obj)
